@@ -1,4 +1,7 @@
+/* eslint-disable no-undef */
 /* eslint-disable strict */
+
+
 /**
  * Example store structure
  */
@@ -100,11 +103,11 @@ function generateQuestion(question, option1, option2, option3, option4) {
           <form>
             <fieldset>
               <legend>${question}</legend>
-              <div><input type="radio" class="answer" name="answers" value="answer1"><label for="answer1">${option1}</label></div>
-              <div><input type="radio" class="answer" name="answers" value="answer2"><label for="answer2">${option2}</label></div>
-              <div><input type="radio" class="answer" name="answers" value="answer3"><label for="answer3">${option3}</label></div>
-              <div><input type="radio" class="answer" name="answers" value="answer4"><label for="answer4">${option4}</label></div>
-              <button type="submit" class="" id="submitbtn">Submit</button>   
+              <div><input type="radio" id="1" class="answer" name="answers" value="${option1}" required><label for="1">${option1}</label></div>
+              <div><input type="radio" id="2" class="answer" name="answers" value="${option2}" required><label for="2">${option2}</label></div>
+              <div><input type="radio" id="3" class="answer" name="answers" value="${option3}" required><label for="3">${option3}</label></div>
+              <div><input type="radio" id="4" class="answer" name="answers" value="${option4}" required><label for="4">${option4}</label></div>
+              <button type="submit" class="" id="submit-answer">Submit</button>   
             </fieldset>
           </form>`;
 }
@@ -115,7 +118,7 @@ function generateFeedbackCorrect(trivia) {
             <h3>Did you know?</h3>
             <p>${trivia}</p>
             <form id="js-shopping-list-form">
-              <button type="submit" class="" id="submitbtn">Continue</button>
+              <button type="submit" class="" id="next-question">Continue</button>
             </form>
           </section>`;
 }
@@ -125,7 +128,7 @@ function generateFeedbackWrong(correctAnswer) {
             <h2>Oh no!</h2>
             <p>The correct answer was ${correctAnswer}.</p>
               <form id="js-shopping-list-form">
-                <button type="submit" class= "glow-on-hover" id="submitbtn">Continue</button>
+                <button type="submit" class="" id="next-question">Continue</button>
               </form>
           </section>`;
 }
@@ -136,7 +139,7 @@ function generateFinalResults() {
   return `<section>
             <p>You got ${STORE.score} out 5 correct!</p>
             <form id="results-form">
-              <button type="submit" class="" id="reset">Reset</button>
+              <button type="submit" class="" id="start-over">Start Over!</button>
             </form>
           </section>`;
 }
@@ -147,6 +150,7 @@ function generateFinalResults() {
 
 // a function that renders the welcome screen
 function renderWelcomeScreen() {
+  console.log('Welcome Screen loaded!');
   const html = generateWelcomeScreen();
   $('main').html(html);
 }
@@ -185,9 +189,48 @@ function renderFinalResults() {
 /********** EVENT HANDLER FUNCTiONS **********/
 
 // These functions handle events (submit, click, etc)
+function handleQuizStart() {
+  $('button#start').click(event => {
+    console.log('Quiz Start ran!');
+    STORE.quizStarted = true;
+    renderQuestionScreens();
+  });
+}
+
+fucntion checkAnswer() {
+  if
+};
+
+function handleSubmitAnswer() {
+  $('button#submit-answer').submit(event => {
+    console.log('Submit Answer ran!');
+    event.preventDefault();
+    if($(':checked').val() === STORE.questions[STORE.questionNumber].correctAnswer) {
+      STORE.score ++;
+      renderFeedbackCorrect(STORE.questions[STORE.questionNumber].trivia);
+    } else {
+      renderFeedbackWrong(STORE.questions[STORE.questionNumber].correctAnswer);
+    }
+  });
+}
 
 
+function handleNextQuestion() {
+
+}
+
+function handleRestart() {
+
+}
 
 
+function quizHandlers() {
 
-renderQuestionScreens();
+  renderWelcomeScreen();
+  handleQuizStart();
+  handleSubmitAnswer();
+  handleNextQuestion();
+  handleRestart();
+}
+
+$(quizHandlers);
