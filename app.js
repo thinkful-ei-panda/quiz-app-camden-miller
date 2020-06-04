@@ -197,15 +197,15 @@ function handleQuizStart() {
   });
 }
 
-fucntion checkAnswer() {
-  if
-};
+// fucntion checkAnswer() {
+//   if
+// };
 
 function handleSubmitAnswer() {
   $('button#submit-answer').submit(event => {
     console.log('Submit Answer ran!');
     event.preventDefault();
-    if($(':checked').val() === STORE.questions[STORE.questionNumber].correctAnswer) {
+    if($('input:checked').val() === STORE.questions[STORE.questionNumber].correctAnswer) {
       STORE.score ++;
       renderFeedbackCorrect(STORE.questions[STORE.questionNumber].trivia);
     } else {
