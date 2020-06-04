@@ -46,7 +46,7 @@ const STORE = {
         'King Kong ain’t got shit on me!',
         'The Happiest Sound in All the World'
       ],
-      correctAnswer: 'King Kong ain’t got nothin’ on me!',
+      correctAnswer: 'King Kong ain’t got shit on me!',
       trivia: 'The line "King Kong ain\'t got shit on me!" was ad-libbed by Denzel Washington.'
     },
     {
@@ -85,45 +85,58 @@ const STORE = {
 
 // These functions return HTML templates
 
+//a function that returns the welcome screen template
+function generateWelcomeScreen() {
+  return `<section>
+            <form id="start-form">
+              <button type="submit" class="" id="start">Start</button>
+            </form>
+          </section>`;
+}
+
 //a function that returns the question template
-function questionTemplate(index) {
-  return `<legend class='' id=''>${STORE.questions[index].question}</legend>`;
+function generateQuestion(question, option1, option2, option3, option4) {
+  return `<h2>Question ${STORE.questionNumber} of 5</h2>
+          <form>
+            <fieldset>
+              <legend>${question}</legend>
+              <div><input type="radio" class="answer" name="answers" value="answer1"><label for="answer1">${option1}</label></div>
+              <div><input type="radio" class="answer" name="answers" value="answer2"><label for="answer2">${option2}</label></div>
+              <div><input type="radio" class="answer" name="answers" value="answer3"><label for="answer3">${option3}</label></div>
+              <div><input type="radio" class="answer" name="answers" value="answer4"><label for="answer4">${option4}</label></div>
+              <button type="submit" class="" id="submitbtn">Submit</button>   
+            </fieldset>
+          </form>`;
 }
 
-//a function that returns the individual answer templates
-function answerTemplate(questionindex,answerindex) {
-  return `<div class= "input-selection">
-            <input type="radio" id="answer" name="gender" value="answer">
-            <label for="answers">${STORE.questions[questionindex].answers[answerindex]}</label>
-          </div>`;
+function generateFeedbackCorrect(trivia) {
+  return `<section>
+            <h2>That's right!</h2>
+            <h3>Did you know?</h3>
+            <p>${trivia}</p>
+            <form id="js-shopping-list-form">
+              <button type="submit" class="" id="submitbtn">Continue</button>
+            </form>
+          </section>`;
 }
 
-//a function that creates the answers form 
-function answersFormTemplate(questionIndex) {
-  let answersForm = [`<form>
-                        <fieldset>
-                          ${questionTemplate(questionIndex)}`];
-  for (let answerIndex=0; answerIndex<STORE.questions[questionIndex].answers.length; answerIndex++) {
-    answersForm.push(answerTemplate(questionIndex, answerIndex));
-  }
-  answersForm.push[`<button type="submit" class= "glow-on-hover" id="submitbtn">Submit</button>   
-                  </fieldset>
-                </form>`];
-  return answersForm.join(' ');
+function generateFeedbackWrong(correctAnswer) {
+  return `<section>
+            <h2>Oh no!</h2>
+            <p>The correct answer was ${correctAnswer}.</p>
+              <form id="js-shopping-list-form">
+                <button type="submit" class= "glow-on-hover" id="submitbtn">Continue</button>
+              </form>
+          </section>`;
 }
 
-//a function display how far through the list of questions the user is (x out of 5 questions)
-function progressTemplate() {
-  return '<h2>Question 1 of 5</h2>';
-  //return `<h2>Question ${STORE.questionNumber} of 5</h2>`;
-}
 
 //a function to return the final results template
-function finalResultsTemplate() {
+function generateFinalResults() {
   return `<section>
             <p>You got ${STORE.score} out 5 correct!</p>
             <form id="results-form">
-              <button type="submit" class= "glow-on-hover" id="reset">Reset</button>
+              <button type="submit" class="" id="reset">Reset</button>
             </form>
           </section>`;
 }
@@ -134,36 +147,39 @@ function finalResultsTemplate() {
 
 // a function that renders the welcome screen
 function renderWelcomeScreen() {
-  $('main').html(`<section>
-                    <form id="start-form">
-                      <button type="submit" class= "glow-on-hover" id="start">Start</button>
-                    </form>
-                  </section>`)
+  const html = generateWelcomeScreen();
+  $('main').html(html);
 }
 
 // a function that renders the question screens
-function renderQuestionScreens(questionIndex) {
-  $('main').html(`${progressTemplate()} ${answersFormTemplate(questionIndex)}`);
+function renderQuestionScreens() {
+  const question = STORE.questions[STORE.questionNumber].question,
+    option1 = STORE.questions[STORE.questionNumber].answers[0],
+    option2 = STORE.questions[STORE.questionNumber].answers[1],
+    option3 = STORE.questions[STORE.questionNumber].answers[2],
+    option4 = STORE.questions[STORE.questionNumber].answers[3],
+    html = generateQuestion(question,option1,option2,option3,option4);
+  $('main').html(html);
 }
 
 // a function that renders the correct answer screen
-function renderCorrectScreen(questionIndex) {
-  $('main').html(`<section>
-                    <h2>That's right!</h2>
-                    <h3>Did you know?</h3>
-                    <p>${STORE.questions[questionIndex].trivia}</p>
-                    <form id="js-shopping-list-form">
-                      <button type="submit" class= "glow-on-hover" id="submitbtn">Continue</button>
-                    </form>
-                  </section>`)
+function renderFeedbackCorrect() {
+  const trivia = STORE.questions[STORE.questionNumber].trivia,
+    html = generateFeedbackCorrect(trivia);
+  $('main').html(html);
 }
 
 //a function that renders the wrong answer screen
-function renderWrongScreen() {
+function renderFeedbackWrong() {
+  const correct = STORE.questions[STORE.questionNumber].correctAnswer,
+    html = generateFeedbackWrong(correct);
+  $('main').html(html);
 }
 
 // a function that renders the final results screen
-function renderFinalScreen() {
+function renderFinalResults() {
+  const html = generateFinalResults();
+  $('main').html(html);
 }
 
 /********** EVENT HANDLER FUNCTiONS **********/
@@ -171,9 +187,7 @@ function renderFinalScreen() {
 // These functions handle events (submit, click, etc)
 
 
-/********** EVENT HANDLER FUNCTiONS **********/
-// Start Quiz button handler should call questions page render
 
 
 
-renderQuestionScreens(0);
+renderQuestionScreens();
