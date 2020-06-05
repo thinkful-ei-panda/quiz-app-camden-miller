@@ -99,7 +99,7 @@ function generateWelcomeScreen() {
 
 //a function that returns the question template
 function generateQuestion(question, option1, option2, option3, option4) {
-  return `<h2>Question ${STORE.questionNumber} of 5</h2>
+  return `<h2>Question ${STORE.questionNumber+1} of 5</h2>
           <form>
             <fieldset>
               <legend>${question}</legend>
@@ -107,7 +107,7 @@ function generateQuestion(question, option1, option2, option3, option4) {
               <div><input type="radio" id="2" class="answer" name="answers" value="${option2}" required><label for="2">${option2}</label></div>
               <div><input type="radio" id="3" class="answer" name="answers" value="${option3}" required><label for="3">${option3}</label></div>
               <div><input type="radio" id="4" class="answer" name="answers" value="${option4}" required><label for="4">${option4}</label></div>
-              <input type="submit" class="" id="submit-answer">Submit</input>   
+              <button type="submit" class="" id="submitAnswer">Submit</input>   
             </fieldset>
           </form>`;
 }
@@ -190,7 +190,7 @@ function renderFinalResults() {
 
 // These functions handle events (submit, click, etc)
 function handleQuizStart() {
-  $('button#start').click(event => {
+  $('main').on('click','#start', event => {
     console.log('Quiz Start ran!');
     event.preventDefault();
     STORE.quizStarted = true;
@@ -198,31 +198,44 @@ function handleQuizStart() {
   });
 }
 
-// fucntion checkAnswer() {
-//   if
-// };
+function checkAnswer() {
+  if($('input:checked').val() === STORE.questions[STORE.questionNumber].correctAnswer) {
+    STORE.score++;
+    renderFeedbackCorrect(STORE.questions[STORE.questionNumber].trivia);
+  } else {
+    renderFeedbackWrong(STORE.questions[STORE.questionNumber].correctAnswer);
+  }
+}
 
 function handleSubmitAnswer() {
-  $('input[type=submit]').submit(event => {
+  $('main').submit(event => {
     console.log('Submit Answer ran!');
     event.preventDefault();
-    if($('input:checked').val() === STORE.questions[STORE.questionNumber].correctAnswer) {
-      STORE.score ++;
-      renderFeedbackCorrect(STORE.questions[STORE.questionNumber].trivia);
+    checkAnswer();
+  });
+}
+
+function handleNextQuestion() {
+  $('main').on('click', '#next-question', event => {
+    console.log('Next Question ran!');
+    event.preventDefault();
+    STORE.questionNumber++;
+    if(STORE.questionNumber < STORE.questions.length) {
+      renderQuestionScreens();
     } else {
-      renderFeedbackWrong(STORE.questions[STORE.questionNumber].correctAnswer);
+      renderFinalResults();
     }
   });
 }
 
-
-// function handleNextQuestion() {
-
-// }
-
-// function handleRestart() {
-
-// }
+function handleRestart() {
+  $('main').on('click', '#start-over', event => {
+    event.preventDefault();
+    STORE.questionNumber = 0;
+    STORE.score = 0;
+    renderWelcomeScreen();
+  });
+}
 
 
 function quizHandlers() {
@@ -230,8 +243,8 @@ function quizHandlers() {
   renderWelcomeScreen();
   handleQuizStart();
   handleSubmitAnswer();
-  // handleNextQuestion();
-  // handleRestart();
+  handleNextQuestion();
+  handleRestart();
 }
 
 $(quizHandlers);
