@@ -150,7 +150,6 @@ function generateFinalResults() {
 
 // a function that renders the welcome screen
 function renderWelcomeScreen() {
-  console.log('Welcome Screen loaded!');
   const html = generateWelcomeScreen();
   $('main').html(html);
 }
@@ -191,7 +190,6 @@ function renderFinalResults() {
 // These functions handle events (submit, click, etc)
 function handleQuizStart() {
   $('main').on('click','#start', event => {
-    console.log('Quiz Start ran!');
     event.preventDefault();
     STORE.quizStarted = true;
     renderQuestionScreens();
@@ -209,7 +207,6 @@ function checkAnswer() {
 
 function handleSubmitAnswer() {
   $('main').submit(event => {
-    console.log('Submit Answer ran!');
     event.preventDefault();
     checkAnswer();
   });
@@ -217,7 +214,6 @@ function handleSubmitAnswer() {
 
 function handleNextQuestion() {
   $('main').on('click', '#next-question', event => {
-    console.log('Next Question ran!');
     event.preventDefault();
     STORE.questionNumber++;
     if(STORE.questionNumber < STORE.questions.length) {
