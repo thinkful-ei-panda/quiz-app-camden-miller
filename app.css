@@ -113,7 +113,7 @@ img {
 
 @media screen and (min-width: 600px) {
   .flex {flex-direction: row;}
-  img {max-width: 300px;}
+  img {max-width: 500px;}
   section {padding-bottom: 30px;}
   button {padding-bottom: 0;}
   .button-holder {text-align: right;}
