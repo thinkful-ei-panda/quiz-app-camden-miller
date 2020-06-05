@@ -9,3 +9,114 @@
 
 * 
 
+body { 
+  justify-content: center;
+  margin: auto;
+  background: url("img/background.jpg") no-repeat center center fixed; 
+  background-size: cover;
+}
+
+h1 {
+  font-size: 12vw;
+  text-align: center;
+  font-family: 'Open Sans';
+  color: white;
+}
+
+h2{
+  text-align: center;
+  font-family: 'Open Sans';
+  color: white;
+  font-size: 4vw;
+}
+
+h3{
+  text-align: center;
+  font-family: 'Open Sans';
+  color: white;
+  font-size: 6vw;
+}
+
+p{
+  text-align: center;
+  font-family: 'Open Sans';
+  color: white;
+  font-size: 3vw;
+}
+
+.flex{
+  display: flex;
+  flex-direction: column;
+}
+
+section {
+  text-align: justify;
+  background: rgba(11, 0, 0, .99);
+  border-radius:5px;
+  box-shadow: 0 0 2px 2px lightgrey;
+  padding: 30px 30px 0px 30px;
+  margin-bottom: 30px;
+}
+
+.start-section {
+  padding: 30px
+}
+
+form{
+  color: white;
+  width: 100%;
+  font-size: 3vw;
+  margin-top: 15px;
+}
+
+legend {
+  font-size: 4vw;
+  font-weight: bolder;
+  text-align: center;
+}
+
+fieldset {
+  border: none;
+}
+
+.input-holder {
+  margin: 0 15%;
+}
+
+.button-holder, .button-holder-start{
+  text-align: center;
+}
+
+button {
+  border: none;
+  background-color: inherit;
+  padding: 14px 28px;
+  font-size: 6vw;
+  cursor: pointer;
+  display: inline-block;
+  color: white;
+  font-family: 'Open Sans';
+}
+
+main {
+  color: white;
+  border-width: 5px;
+  border-color: white;
+  margin: 50px;
+  justify-content: center;
+  font-family: 'Open Sans';
+}
+
+img {
+  width: 100%;
+}
+
+@media screen and (min-width: 600px) {
+  .flex {flex-direction: row;}
+  img {max-width: 300px;}
+  section {padding-bottom: 30px;}
+  button {padding-bottom: 0;}
+  .button-holder {text-align: right;}
+  fieldset {padding-bottom: 0;}
+  form {margin-top: 0;}
+}

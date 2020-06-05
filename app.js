@@ -9,7 +9,7 @@ const STORE = {
   // 5 or more questions are required
   questions: [
     {
-      question: 'Who directed "The Titanic (1997)"?',
+      question: 'Who directed <cite>Titanic (1997)</cite>?',
       answers: [
         'James Cameron',
         'Steven Spielberg',
@@ -17,10 +17,11 @@ const STORE = {
         'Michael Bay'
       ],
       correctAnswer: 'James Cameron',
+      poster: 'titanic.jpg',
       trivia: 'In the scene where the water comes crashing into the Grand Staircase room, the film makers had only one shot at it because the entire set and furnishings were going to be destroyed in the shot.'
     },
     {
-      question: 'Who plays Obadiah Stane in "Iron Man (2008)"',
+      question: 'Who plays Obadiah Stane in <cite>Iron Man (2008)</cite>',
       answers: [
         'Jeff Bridges',
         'Jeff Goldblum',
@@ -28,10 +29,11 @@ const STORE = {
         'Robert Downey Jr.'
       ],
       correctAnswer: 'Jeff Bridges',
+      poster: 'iron-man.jpg',
       trivia: 'Jeff Bridges said he felt really uncomfortable not having a script or rehearsals, since normally he is very prepared and knows his lines word for word. Realizing it was like he was in a "two hundred million dollar student film" took the pressure off of him and made it fun.'
     },
     {
-      question: 'Which NBA player did NOT have his abilities stolen by aliens in "Space Jam (1996)"?',
+      question: 'Which NBA player did NOT have his abilities stolen by aliens in <cite>Space Jam (1996)</cite>?',
       answers: [
         'Charles Barkley',
         'Patrick Ewing',
@@ -39,21 +41,23 @@ const STORE = {
         'Michael Jordan'
       ],
       correctAnswer: 'Michael Jordan',
+      poster: 'space-jam.jpg',
       trivia: 'The movie\'s original promotional website can still be found online at www.spacejam.com, exactly as it appeared in 1996.'
     },
     {
-      question: 'What was the tagline for "Training Day (2001)"',
+      question: 'What was the name of the neighbor kid in <cite>Toy Story (1995)</cite>?',
       answers: [
-        'Life is in their hands -- Death is on their minds.',
-        'On every street in every city in this country, there is a nobody who dreams of being a somebody.',
-        'King Kong ain’t got shit on me!',
-        'The Happiest Sound in All the World'
+        'Vic Thompson',
+        'Sid Phillips',
+        'Tim Jeffreys',
+        'Jill Valentine'
       ],
-      correctAnswer: 'King Kong ain’t got shit on me!',
-      trivia: 'The line "King Kong ain\'t got shit on me!" was ad-libbed by Denzel Washington.'
+      correctAnswer: 'Sid Phillips',
+      poster: 'toy-story.jpg',
+      trivia: 'Sid Phillips is said to be inspired by a former Pixar employee of the same last name who was known to disassemble toys and use the parts to build bizarre creations.'
     },
     {
-      question: 'What was the name of the computer in "2001: A Space Odyssey (1968)"',
+      question: 'What was the name of the computer in <cite>2001: A Space Odyssey (1968)</cite>?',
       answers: [
         'T-1000',
         'Hal 9000',
@@ -61,6 +65,7 @@ const STORE = {
         'Commodore 64'
       ],
       correctAnswer: 'Hal 9000',
+      poster: '2001.jpg',
       trivia: 'One of Stanley Kubricks additions to the screenplay which Arthur C. Clarke did not like was HAL\'s ability to read the astronauts\' lips when they are inside the pod. Years later, he admitted that Kubrick had been right all along, after learning that at the time, computers were being developed with the ability to read lips.'
     }
   ],
@@ -90,26 +95,31 @@ const STORE = {
 
 //a function that returns the welcome screen template
 function generateWelcomeScreen() {
-  return `<section>
-            <form id="start-form">
+  return `<section class="start-section">
+            <div class="button-holder-start">
               <button type="submit" class="" id="start">Start</button>
-            </form>
+            </div>
           </section>`;
 }
 
+
+
 //a function that returns the question template
-function generateQuestion(question, option1, option2, option3, option4) {
+function generateQuestion(question, poster, option1, option2, option3, option4) {
   return `<h2>Question ${STORE.questionNumber+1} of 5</h2>
-          <form>
-            <fieldset>
-              <legend>${question}</legend>
-              <div><input type="radio" id="1" class="answer" name="answers" value="${option1}" required><label for="1">${option1}</label></div>
-              <div><input type="radio" id="2" class="answer" name="answers" value="${option2}" required><label for="2">${option2}</label></div>
-              <div><input type="radio" id="3" class="answer" name="answers" value="${option3}" required><label for="3">${option3}</label></div>
-              <div><input type="radio" id="4" class="answer" name="answers" value="${option4}" required><label for="4">${option4}</label></div>
-              <button type="submit" class="" id="submitAnswer">Submit</input>   
-            </fieldset>
-          </form>`;
+          <section class="flex">
+            <div id="poster-div"><img src="img\\${poster}" id="poster"></div>
+            <form>
+              <fieldset>
+                <legend>${question}</legend>
+                <div class="input-holder"><input type="radio" id="1" class="answer" name="answers" value="${option1}" required><label for="1">${option1}</label></div>
+                <div class="input-holder"><input type="radio" id="2" class="answer" name="answers" value="${option2}" required><label for="2">${option2}</label></div>
+                <div class="input-holder"><input type="radio" id="3" class="answer" name="answers" value="${option3}" required><label for="3">${option3}</label></div>
+                <div class="input-holder"><input type="radio" id="4" class="answer" name="answers" value="${option4}" required><label for="4">${option4}</label></div>
+                <div class="button-holder"><button type="submit" class="" id="submitAnswer">Submit</input></div>   
+              </fieldset>
+            </form>
+          </section>`;
 }
 
 function generateFeedbackCorrect(trivia) {
@@ -117,9 +127,9 @@ function generateFeedbackCorrect(trivia) {
             <h2>That's right!</h2>
             <h3>Did you know?</h3>
             <p>${trivia}</p>
-            <form id="js-shopping-list-form">
+            <div class="button-holder">
               <button type="submit" class="" id="next-question">Continue</button>
-            </form>
+            </div>
           </section>`;
 }
 
@@ -127,9 +137,9 @@ function generateFeedbackWrong(correctAnswer) {
   return `<section>
             <h2>Oh no!</h2>
             <p>The correct answer was ${correctAnswer}.</p>
-              <form id="js-shopping-list-form">
-                <button type="submit" class="" id="next-question">Continue</button>
-              </form>
+            <div class="button-holder">
+              <button type="submit" class="" id="next-question">Continue</button>
+            </div>
           </section>`;
 }
 
@@ -138,9 +148,9 @@ function generateFeedbackWrong(correctAnswer) {
 function generateFinalResults() {
   return `<section>
             <p>You got ${STORE.score} out 5 correct!</p>
-            <form id="results-form">
+            <div class="button-holder">
               <button type="submit" class="" id="start-over">Start Over!</button>
-            </form>
+            </div>
           </section>`;
 }
 
@@ -157,11 +167,12 @@ function renderWelcomeScreen() {
 // a function that renders the question screens
 function renderQuestionScreens() {
   const question = STORE.questions[STORE.questionNumber].question,
+    poster = STORE.questions[STORE.questionNumber].poster,
     option1 = STORE.questions[STORE.questionNumber].answers[0],
     option2 = STORE.questions[STORE.questionNumber].answers[1],
     option3 = STORE.questions[STORE.questionNumber].answers[2],
     option4 = STORE.questions[STORE.questionNumber].answers[3],
-    html = generateQuestion(question,option1,option2,option3,option4);
+    html = generateQuestion(question,poster,option1,option2,option3,option4);
   $('main').html(html);
 }
 
