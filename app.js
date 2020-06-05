@@ -107,7 +107,7 @@ function generateQuestion(question, option1, option2, option3, option4) {
               <div><input type="radio" id="2" class="answer" name="answers" value="${option2}" required><label for="2">${option2}</label></div>
               <div><input type="radio" id="3" class="answer" name="answers" value="${option3}" required><label for="3">${option3}</label></div>
               <div><input type="radio" id="4" class="answer" name="answers" value="${option4}" required><label for="4">${option4}</label></div>
-              <button type="submit" class="" id="submit-answer">Submit</button>   
+              <input type="submit" class="" id="submit-answer">Submit</input>   
             </fieldset>
           </form>`;
 }
@@ -192,6 +192,7 @@ function renderFinalResults() {
 function handleQuizStart() {
   $('button#start').click(event => {
     console.log('Quiz Start ran!');
+    event.preventDefault();
     STORE.quizStarted = true;
     renderQuestionScreens();
   });
@@ -202,7 +203,7 @@ function handleQuizStart() {
 // };
 
 function handleSubmitAnswer() {
-  $('button#submit-answer').submit(event => {
+  $('input[type=submit]').submit(event => {
     console.log('Submit Answer ran!');
     event.preventDefault();
     if($('input:checked').val() === STORE.questions[STORE.questionNumber].correctAnswer) {
@@ -215,13 +216,13 @@ function handleSubmitAnswer() {
 }
 
 
-function handleNextQuestion() {
+// function handleNextQuestion() {
 
-}
+// }
 
-function handleRestart() {
+// function handleRestart() {
 
-}
+// }
 
 
 function quizHandlers() {
@@ -229,8 +230,8 @@ function quizHandlers() {
   renderWelcomeScreen();
   handleQuizStart();
   handleSubmitAnswer();
-  handleNextQuestion();
-  handleRestart();
+  // handleNextQuestion();
+  // handleRestart();
 }
 
 $(quizHandlers);
