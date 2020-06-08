@@ -202,7 +202,6 @@ function renderFinalResults() {
 function handleQuizStart() {
   $('main').on('click','#start', event => {
     event.preventDefault();
-    STORE.quizStarted = true;
     renderQuestionScreens();
   });
 }
